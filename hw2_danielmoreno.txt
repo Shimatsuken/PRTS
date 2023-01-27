@@ -1,0 +1,83 @@
+Script started on Fri 27 Jan 2023 10:52:11 AM MST
+[?1034hsh-4.2$ cat hw2_danielmoreno.c
+/*
+* File: hw2_danielmoreno.c
+* Author: Daniel Moreno
+* Date: 1/26/2023
+* Purpose: Write a program that keeps asking the user to supply an integer as input until the user tells the program to stop by entering q. It will then print out the positive integers entered, the number of negative integers entered, and the sum of all integers entered.
+* Sources of help: Nolan Trapp, we discussed how to declare 'int' and touched on 'vim' usage. I also spoke to Professor France concerning the '==1' part of my code.
+
+*/
+
+
+
+
+#include <stdio.h>
+
+int main() {
+
+  int total = 0;
+  int positive = 0;
+  int negative = 0;
+  int sum = 0;
+  int input;
+
+
+  printf("Enter an integer (or q to quit): \n");
+    while(scanf("%d", &input)==1){
+
+      total+=1;
+
+      if(input<0){
+        negative+=1;
+      }
+
+      if(input>0){
+        positive+=1;
+      }
+
+      sum+=input;
+  
+      printf("Enter an integer (or q to quit): \n");
+    }
+  
+  printf("You entered %d integers.\n", total);
+  printf("%d of the integers were positive.\n", positive);
+  printf("%d of the integers were negative.\n", negative);
+  printf("The sum of the %d integers was %d.\n", input, sum);
+
+
+
+
+
+
+
+
+
+
+
+   return 0;
+}
+
+sh-4.2$ gcc -ansi -Wall hw2_danielmoreno.c
+sh-4.2$ a.out
+Enter an integer (or q to quit): 
+5
+Enter an integer (or q to quit): 
+-3
+Enter an integer (or q to quit): 
+0
+Enter an integer (or q to quit): 
+7
+Enter an integer (or q to quit): 
+-2
+Enter an integer (or q to quit): 
+q
+You entered 5 integers.
+2 of the integers were positive.
+2 of the integers were negative.
+The sum of the -2 integers was 7.
+sh-4.2$ exit
+exit
+
+Script done on Fri 27 Jan 2023 10:53:42 AM MST
