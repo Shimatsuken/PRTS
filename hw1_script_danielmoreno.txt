@@ -1,0 +1,29 @@
+Script started on Thu 19 Jan 2023 06:22:25 PM MST
+[?1034hsh-4.2$ cat hwa[K1.[K[K_danie[K[K[K[K[K[K1_danielmoreno.c
+/************************************************************
+* File: hw1_danielmoreno.c
+* Author: Daniel Moreno
+* Purpose: This program shares interesting facts about me.
+************************************************************/
+
+#include <stdio.h>
+
+int main()
+{
+    printf("\n Greetings Earthlings! \n");
+    printf("I grew up in Surprise, Arizona. \n");
+    printf("I have coded with Python in CS118 last semester, and have minor hardware experience.");
+
+return 0;
+
+}
+
+sh-4.2$ gcc -ani[Ksi -Wall hw1_danielmoreno.c
+sh-4.2$ a.out
+
+ Greetings Earthlings! 
+I grew up in Surprise, Arizona. 
+I have coded with Python in CS118 last semester, and have minor hardware experience.sh-4.2$ exit
+exit
+
+Script done on Thu 19 Jan 2023 06:23:05 PM MST
