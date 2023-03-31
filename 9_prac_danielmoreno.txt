@@ -1,0 +1,68 @@
+Script started on Tue 28 Mar 2023 06:37:02 PM MST
+[?1034hsh-4.2$ cat 9prac.c 
+/*
+ * File name: 9.prac.c
+ * Author: Daniel Moreno
+ * Date: 3/27/2023
+ * Purpose: Create structures for points with typedef.
+ *
+ */
+ 
+#include <stdio.h>
+
+typedef struct {
+    int x;
+    int y;
+} Point;
+
+
+typedef struct {
+    Point pt1;
+    Point pt2;
+} Rectangle;
+
+int calcPerimeter(Rectangle rec);
+double absol(double num);
+
+int main() {
+
+    Rectangle rec;
+
+
+    rec.pt1.x = -4;
+    rec.pt1.y = 2;
+
+    rec.pt2.x = 5;
+    rec.pt2.y = -10;
+
+    printf("Point 1 is: (%d, %d)\n", rec.pt1.x, rec.pt1.y);
+    printf("Point 2 is: (%d, %d)\n", rec.pt2.x, rec.pt2.y);
+    
+    printf("Perimeter of this rectangle is: %d\n", calcPerimeter(rec)); 
+
+
+    return 0;
+}
+
+
+int calcPerimeter(Rectangle rec) {
+    return 2 * (absol(rec.pt1.x - rec.pt2.x) + absol(rec.pt1.y - rec.pt2.y));
+}
+
+double absol(double num) {
+  if (num > 0)
+    return num;
+  else if (num < 0)
+    return -num;
+  else 
+    return 0;
+}
+sh-4.2$ gcc -ansi -Wall 9prac.c 
+sh-4.2$ a.out
+Point 1 is: (-4, 2)
+Point 2 is: (5, -10)
+Perimeter of this rectangle is: 42
+sh-4.2$ exit
+exit
+
+Script done on Tue 28 Mar 2023 06:37:24 PM MST
