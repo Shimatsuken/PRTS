@@ -1,0 +1,149 @@
+Script started on Thu 30 Mar 2023 05:01:49 PM MST
+[?1034hsh-4.2$ cat triangle.h
+typedef struct {
+    double x;
+    double y;
+} Point;
+
+
+typedef struct {
+    Point pt1;
+    Point pt2;
+    Point pt3;
+} Triangle;
+sh-4.2$ cat 9hw.c [K
+/*
+ * File: 9hw.c
+ * Author: Daniel Moreno
+ * Date: 3/30/2023
+ * Purpose: Centroid of a Triangle
+ * Sources of help: Michael Stalford, Gianni Dragos
+ *
+ */
+
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#include "triangle.h"
+
+/* Function: getRandomDouble
+ * Purpose: Create random doubles 
+ * Argument: lowerBound - The lower bound of the range
+ * Argument: upperBound - The upper bound of the range
+ * Returns: Random number between upper and lower bound
+ */
+ 
+double getRandomDouble(double lowerBound, double upperBound);
+
+/*
+ * Function: getRandomPoint
+ * Purpose: Get a random point
+ * Argument: None
+ * Returns: pt
+ */
+ 
+Point getRandomPoint(void);
+
+/*
+ * Function: getCentroid
+ * Purpose: Get the Centroid point of a triangle
+ * Argument: Triangle tri - The triangle that needs the centroid found
+ * Returns: trian
+ */
+
+Point getCentroid(Triangle tri);
+
+/*
+ * Function: printVertices
+ * Purpose: Print the vertices of the triangle in a given format
+ * Argument: Triangle - The triangle that needs the vertices printed
+ * Returns: Nothing
+ */
+
+void printVertices(Triangle);
+
+/*
+ * Function: printCentroid
+ * Purpose: Print the vertices of a given triangle
+ * Argument: Point - The data type of the information
+ * Argument: pt - The information going in
+ * Returns: Nothing
+ */
+ 
+void printCentroid(Point);
+
+/*
+ * Function: printPoint
+ * Argument: Point - Data type
+ * Returns: Nothing
+ */
+
+void printPoint(Point);
+
+
+double getRandomDouble(double lowerBound, double upperBound) { 
+    double rangeOfReals = upperBound - lowerBound; 
+    double normalizedRand = rand() / (RAND_MAX + 1.0); 
+    return normalizedRand * rangeOfReals + lowerBound; 
+}
+
+Point getRandomPoint() {
+    Point pt = {getRandomDouble(0, 1), getRandomDouble(0, 1)};
+
+    return pt;
+  
+}
+
+Point getCentroid(Triangle tri) {
+
+    Point trian = {(tri.pt1.x + tri.pt2.x + tri.pt3.x) / 3, (tri.pt1.y + tri.pt2.y + tri.pt3.y) / 3};
+
+    return trian;
+}
+
+void printPoint(Point pt) {
+    printf("[%4.2lf, %4.2lf]", pt.x, pt.y);
+
+}
+
+
+void printVertices(Triangle tri) {
+    printf("The triangle vertices are ");
+    printPoint(tri.pt1);
+    printf(", "); 
+    printPoint(tri.pt2);
+    printf(" and ");
+    printPoint(tri.pt3);
+    printf("\n");
+}
+
+void printCentroid(Point pt) {
+    printf("The centroid is ");
+    printPoint(pt);
+    printf("\n");
+}
+
+int main() {
+
+    srand((unsigned)time(NULL));
+    
+    Triangle tri;
+    
+    
+    tri.pt1 = getRandomPoint();
+    tri.pt2 = getRandomPoint();
+    tri.pt3 = getRandomPoint();
+    
+    printVertices(tri);
+    printCentroid(getCentroid(tri));
+
+    return 0;
+}
+sh-4.2$ gcc -ansi -Wall 9hw.c
+sh-4.2$ a.out
+The triangle vertices are [0.38, 0.15], [0.30, 0.94] and [0.20, 0.78]
+The centroid is [0.29, 0.62]
+sh-4.2$ exit
+exit
+
+Script done on Thu 30 Mar 2023 05:02:17 PM MST
