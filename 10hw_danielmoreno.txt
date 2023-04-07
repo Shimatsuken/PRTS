@@ -1,0 +1,233 @@
+Script started on Thu 06 Apr 2023 09:19:51 PM MST
+[?1034hsh-4.2$ cat point.h
+/*
+ * File: point.h
+ * Author: Daniel Moreno
+ * Purpose: Week 10 HW
+ * Date: 4/6/2023
+ */
+ 
+/* Define a structure for a Point */
+typedef struct {
+    double x;
+    double y;
+} Point;
+
+sh-4.2$ a[Kcat polygon.h
+/*
+ * File: polygon.h
+ * Author: Daniel Moreno
+ * Purpose: Week 10 HW
+ * Date: 4/6/2023
+ */
+ 
+
+#include "point.h"
+
+/* Define a structure for a Polygon */
+
+typedef struct {
+int vert;
+Point vertices[16];
+} Polygon;sh-4.2$ cat 10hw.c
+/*
+ * File: 10hw.c
+ * Author: Daniel Moreno
+ * Purpose: Perimeter of a Polygon
+ * Date: 4/4/2023
+ * Sources of help: Michael Stalford, Gianni Dragos
+ */
+
+
+#include <stdio.h>
+#include "polygon.h"
+#include <math.h>
+
+/*
+ * Function: enterPoint
+ * Purpose: Prompt the user for a point
+ * Argument: void
+ * Returns: Point
+ */
+ 
+Point enterPoint(void);
+
+/*
+ * Function: buildPolygon
+ * Purpose: Build the polygon with vertices
+ * Argument: void
+ * Returns: Polygon
+ */
+ 
+Polygon buildPolygon(void);
+
+/*
+ * Function: printPoint
+ * Purpose: Print the points
+ * Argument: const Point* point
+ * Returns: Nothing
+ */
+ 
+void printPoint(const Point* point);
+
+/*
+ * Function: printVertices
+ * Purpose: Print the vertices of the given polygon
+ * Argument: const Polygon* poly
+ * Returns: Nothing
+ */
+ 
+void printVertices(const Polygon* poly);
+
+/*
+ * Function: printPerimeter
+ * Purpose: Print the perimeter of the given polygon
+ * Argument: const Polygon* poly
+ * Returns: Nothing
+ */
+ 
+void printPerimeter(const Polygon* poly);
+
+/*
+ * Function: distanceBetweenPoints
+ * Purpose: Find the distance between two given points
+ * Argument: const Point* p1
+ * Argument: const Point* p2
+ * Returns: Nothing
+ */
+ 
+double distanceBetweenPoints(const Point* p1, const Point* p2);
+
+/*
+ * Function: getPerimeter
+ * Purpose: Assemble the perimeter of the given polygon
+ * Argument: const Polygon* poly
+ * Returns: Double 
+ */
+ 
+double getPerimeter(const Polygon* poly);
+
+int main() {
+    Polygon poly;
+    
+    poly = buildPolygon();
+    printVertices(&poly);
+    printPerimeter(&poly);
+
+    return 0;
+} 
+
+Polygon buildPolygon(void) {
+    int i = 0;
+    Polygon poly;
+    
+    printf("Enter the number of vertices: ");
+    scanf("%d", &poly.vert);
+    for (i = 0; i < poly.vert; ++i)
+        poly.vertices[i] = enterPoint();
+    return poly;
+}
+    
+
+Point enterPoint(void) {
+    Point pt;
+    int result = 2;
+    char c;
+    
+    do {
+        printf("Enter a point as x,y: ");
+        result = scanf("%lf,%lf", &pt.x, &pt.y);
+        while (scanf("%c", &c) > 0 && c != '\n');
+        if (result != 2)
+            printf("Invalid input! Try again. ");
+    } while (result != 2);
+    return pt;
+}
+
+
+void printPoint(const Point* point) {
+    if (point != NULL)
+        printf("(%3.1lf,%3.1lf)", point->x, point->y);
+    else
+        printf("printPoint: error: null input passed\n");
+}
+
+void printVertices(const Polygon* poly) {
+    if (poly != NULL) {
+        int i = 0;
+        for(i = 0; i < poly->vert; ++i) {
+            printPoint(&poly->vertices[i]);
+        }
+    }
+    else
+        printf("printVertices: error: null input passed\n");
+}
+
+ 
+void printPerimeter(const Polygon* poly) {
+    if (poly != NULL)
+        printf("\nThe perimeter is %3.1lf\n", getPerimeter(poly));
+    else
+        printf("printPerimeter: error: null input passed\n");
+}
+
+double distanceBetweenPoints(const Point* p1, const Point* p2) {
+    if (p1||p2 != NULL)
+        return sqrt((p1->x-p2->x)*(p1->x-p2->x) + (p1->y-p2->y)*(p1->y-p2->y));
+    else {
+        printf("distanceBetweenPoints: error: null input passed\n");
+        return 0;
+    }
+}
+
+double getPerimeter(const Polygon* poly){
+    if (poly != NULL) {
+        int i = 0;
+        double perm = 0;
+        Point priorPoint = poly->vertices[poly->vert - 1];
+        Point currentPoint;
+        
+        for(i = 0; i < poly->vert; ++i) {
+            currentPoint = poly->vertices[i];
+            perm += distanceBetweenPoints(&priorPoint, &currentPoint);
+            priorPoint = currentPoint;
+        }
+        return perm;    
+    }
+    else {
+        printf("getPerimeter: error: null input passed\n");
+        return 0;
+    }
+}sh-4.2$ gcc -lm -ansi -Wall 10hw.c
+sh-4.2$ a.out
+Enter the number of vertices: 4
+Enter a point as x,y: -2,2
+Enter a point as x,y: -2,4
+Enter a point as x,y: 3,4
+Enter a point as x,y: 3,-2
+(-2.0,2.0)(-2.0,4.0)(3.0,4.0)(3.0,-2.0)
+The perimeter is 19.4
+sh-4.2$ a.out
+Enter the number of vertices: 6
+Enter a point as x,y: 0,1
+Enter a point as x,y: 2,2
+Enter a point as x,y: 2,4
+Enter a point as x,y: 0,5
+Enter a point as x,y: -2,4
+Enter a point as x,y: -2,2
+(0.0,1.0)(2.0,2.0)(2.0,4.0)(0.0,5.0)(-2.0,4.0)(-2.0,2.0)
+The perimeter is 12.9
+sh-4.2$ a.out
+Enter the number of vertices: 3
+Enter a point as x,y: 1,x
+Invalid input! Try again. Enter a point as x,y: x,2
+Invalid input! Try again. Enter a point as x,y: a,b
+Invalid input! Try again. Enter a point as x,y: 2,3
+Enter a point as x,y: 4,5
+Enter a point as x,y: 6,7
+(2.0,3.0)(4.0,5.0)(6.0,7.0)
+The perimeter is 11.3
+sh-4.2$ exit
+exit
+
+Script done on Thu 06 Apr 2023 09:22:02 PM MST
