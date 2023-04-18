@@ -1,0 +1,83 @@
+Script started on Mon 17 Apr 2023 08:52:28 PM MST
+[?1034hsh-4.2$ cat 11hw.c
+/*
+ * File: 11hw.c
+ * Author: Daniel Moreno
+ * Date: 4/17/23
+ * Purpose: Learn about pointers
+ * Sources of help: Tavis Jorgensen, Gianni Dragos, Michael Stalford
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int printXYZ(int x, int y, int z);
+void enterXYZ(int *ptrX, int *ptrY, int *ptrZ);
+void swap(int* ptr1, int* ptr2);
+void xyzAscending(int* px, int* py, int* pz);
+
+int main() {
+    int x = 0;
+    int y = 0;
+    int z = 0;
+    
+    printXYZ(x, y, z);
+    enterXYZ(&x, &y, &z);
+    printXYZ(x, y, z);
+    xyzAscending(&x, &y, &z);
+    printXYZ(x, y, z);
+
+    return 0;
+}
+
+int printXYZ(int x, int y, int z) {
+    printf("x: %3d, y: %3d, z: %3d\n", x, y, z);
+    return 0;
+}
+
+void enterXYZ(int *ptrX, int *ptrY, int *ptrZ) {
+    int result = 0;
+    char c;
+    
+    do {
+        printf("Enter values for x, y and z as 'x,y,z': ");
+        result = scanf("%d,%d,%d", ptrX, ptrY, ptrZ);
+        while (scanf("%c", &c) > 0 && c != '\n');
+    } while (result != 3);
+
+}
+
+void swap(int* ptr1, int* ptr2) {
+    int temp = *ptr1;
+    *ptr1 = *ptr2;
+    *ptr2 = temp;
+}
+
+void xyzAscending(int* px, int* py, int* pz) {
+
+    if (*px > *py) {
+        swap(px, py);
+    }
+    if (*py > *pz) {
+        swap(py, pz);
+    }
+    if (*px > *py) {
+        swap(px, py);
+    }
+}
+
+sh-4.2$ gcc -ansi -Wall 11hw.c
+sh-4.2$ a.out
+x:   0, y:   0, z:   0
+Enter values for x, y and z as 'x,y,z': 15,5,-2
+x:  15, y:   5, z:  -2
+x:  -2, y:   5, z:  15
+sh-4.2$ a.out
+x:   0, y:   0, z:   0
+Enter values for x, y and z as 'x,y,z': -2,15,5
+x:  -2, y:  15, z:   5
+x:  -2, y:   5, z:  15
+sh-4.2$ exit
+exit
+
+Script done on Mon 17 Apr 2023 08:53:14 PM MST
